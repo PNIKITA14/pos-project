@@ -1,50 +1,51 @@
 const Cart = ({ cart, updateQty, removeFromCart }) => {
   return (
     <div>
-      <h2 className="text-xl font-bold mb-3">Cart</h2>
+      <h2 className="text-2xl font-bold text-green-700 mb-4">Cart</h2>
 
-      {cart.length === 0 && <p>No items in cart</p>}
-
-      <div className="space-y-3">
-        {cart.map((item) => (
+      {cart.length === 0 ? (
+        <p className="text-gray-500">Cart is empty</p>
+      ) : (
+        cart.map((item) => (
           <div
-            key={item.id}
-            className="border p-3 rounded flex justify-between items-center"
+            key={item._id}
+            className="bg-green-50 border border-green-200 rounded-xl p-4 mb-4 shadow"
           >
-            <div>
-              <div className="font-semibold">{item.name}</div>
-              <div className="text-sm text-gray-600">
-                ₹{item.price} × {item.qty} = ₹{item.price * item.qty}
-              </div>
-            </div>
+            <h3 className="text-lg font-semibold">
+              {item.emoji} {item.name}
+            </h3>
+
+            <p className="text-gray-700 mb-2">
+              ₹{item.price} × {item.qty}
+            </p>
 
             <div className="flex items-center gap-2">
               <button
-                onClick={() => updateQty(item.id, "dec")}
-                className="px-2 bg-gray-200"
+                onClick={() => updateQty(item._id, "dec")}
+                className="bg-red-500 text-white px-3 py-1 rounded"
               >
                 -
               </button>
 
-              <span>{item.qty}</span>
+              <span className="font-bold">{item.qty}</span>
 
               <button
-                onClick={() => updateQty(item.id, "inc")}
-                className="px-2 bg-gray-200"
+                onClick={() => updateQty(item._id, "inc")}
+                className="bg-green-600 text-white px-3 py-1 rounded"
               >
                 +
               </button>
 
               <button
-                onClick={() => removeFromCart(item.id)}
-                className="text-red-500 ml-2"
+                onClick={() => removeFromCart(item._id)}
+                className="bg-gray-700 text-white px-3 py-1 rounded ml-2"
               >
-                ✕
+                Remove
               </button>
             </div>
           </div>
-        ))}
-      </div>
+        ))
+      )}
     </div>
   );
 };

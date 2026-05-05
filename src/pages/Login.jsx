@@ -5,6 +5,13 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+
+    const user = {
+      name: "Nikita",
+      role: "Cashier",
+    };
+
+    localStorage.setItem("user", JSON.stringify(user));
     navigate("/dashboard");
   };
 
@@ -21,21 +28,18 @@ const Login = () => {
         <input
           type="email"
           placeholder="Email"
-          className="w-full p-4 border border-gray-300 rounded-xl mb-5 text-lg"
+          className="w-full p-4 border rounded-xl mb-5 text-lg"
           required
         />
 
         <input
           type="password"
           placeholder="Password"
-          className="w-full p-4 border border-gray-300 rounded-xl mb-6 text-lg"
+          className="w-full p-4 border rounded-xl mb-6 text-lg"
           required
         />
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-4 rounded-xl text-xl font-bold hover:bg-blue-700"
-        >
+        <button className="w-full bg-blue-600 text-white py-4 rounded-xl text-xl font-bold">
           Login
         </button>
       </form>

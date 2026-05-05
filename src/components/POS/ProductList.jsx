@@ -1,38 +1,55 @@
 import { useState } from "react";
 
+const emojiMap = {
+  Milk: "🥛",
+  Bread: "🍞",
+  Rice: "🍚",
+  Eggs: "🥚",
+  Sugar: "🍬",
+  Salt: "🧂",
+  Oil: "🛢️",
+  Soap: "🧼",
+  Shampoo: "🧴",
+  "Tea Powder": "☕",
+};
+
 const ProductList = ({ products, addToCart }) => {
   const [search, setSearch] = useState("");
 
-  const filtered = products.filter((p) =>
-    p.name.toLowerCase().includes(search.toLowerCase())
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Products</h2>
+      <div className="flex justify-between mb-3">
+        <h2 className="text-2xl font-bold text-blue-700">Products</h2>
+        <span>{filteredProducts.length} items</span>
+      </div>
 
-      {/* SEARCH */}
       <input
         type="text"
         placeholder="Search product..."
-        className="w-full p-2 border rounded mb-4"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        className="w-full border rounded-xl px-3 py-2 mb-3"
       />
 
-      {/* GRID */}
-      <div className="grid grid-cols-3 gap-4">
-        {filtered.map((item) => (
-          <div
-            key={item.id}
-            className="border p-4 rounded shadow hover:shadow-lg transition"
-          >
-            <div className="font-semibold">{item.name}</div>
-            <div className="text-gray-600">₹{item.price}</div>
+      <div className="grid grid-cols-3 gap-3">
+        {filteredProducts.map((product) => (
+          <div key={product._id} className="bg-blue-50 rounded-xl p-3 shadow">
+            <div className="text-3xl">{emojiMap[product.name] || "🛒"}</div>
+            <h3 className="font-bold">{product.name}</h3>
+            <p className="text-green-700 font-bold">₹{product.price}</p>
 
             <button
-              onClick={() => addToCart(item)}
-              className="mt-2 w-full bg-blue-500 text-white py-1 rounded"
+              onClick={() =>
+                addToCart({
+                  ...product,
+                  emoji: emojiMap[product.name] || "🛒",
+                })
+              }
+              className="w-full bg-blue-600 text-white py-2 rounded-lg mt-2"
             >
               Add
             </button>
